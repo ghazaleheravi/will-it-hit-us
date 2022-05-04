@@ -12,12 +12,12 @@ function Section( {
 
   return (
     <div>
-      <hr></hr>
-      <h4>{name}</h4>
+      <hr className='break'></hr>
+      <h3 className="name">{name.slice(1,name.length-1)}</h3>
       <Hazardous isHazardous={is_potentially_hazardous_asteroid} />
       <Passing data={close_approach_data} />
       <p>
-        <a href={nasa_jpl_url} style={{color: 'palevioletred'}}> 
+        <a className='link' href={nasa_jpl_url}> 
           Find out more
         </a>
       </p>

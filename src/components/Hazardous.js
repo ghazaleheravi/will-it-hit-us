@@ -5,9 +5,11 @@ function Hazardous({ isHazardous }) {
   
   return (
   <div>
-    <p style={{color: 'orange'}}>
-      Potentially hazardous?  {'  '}
-      <span>{isHazardous === true ? <strong>YES 😱</strong> : <strong>Nope 👍</strong>}</span>
+    <p className="hazard">
+      Potentially hazardous?
+      <span className="isHazard">
+        {isHazardous === true ? 'YES 😱' : 'Nope 👍'}
+      </span>
     </p>
   </div>
   );
