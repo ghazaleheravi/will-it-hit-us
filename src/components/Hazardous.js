@@ -2,16 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function Hazardous({ isHazardous }) {
-  
   return (
-  <div>
     <p className="hazard">
       Potentially hazardous?
-      <span className="isHazard">
+      <span className={isHazardous ? 'isHazard' : 'noHazard'}>
         {isHazardous === true ? 'YES 😱' : 'Nope 👍'}
       </span>
     </p>
-  </div>
   );
 }
 

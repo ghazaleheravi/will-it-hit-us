@@ -31,10 +31,36 @@ body {
   font-weight: 200;
 }
 
-.isHazard {
+.noHazard {
   margin-left: 25px;
   font-weight: bold;
   color: orange;
+}
+
+.isHazard {
+  margin-left: 25px;
+  font-weight: bold;
+  color: red;
+  font-weight: bold;
+  animation: isHazard 1s infinite;
+  padding: 2px 4px;
+}
+
+@keyframes isHazard {
+  0% {
+    color: red;
+    background: inherit;
+  }
+
+  50% {
+    color: inherit;
+    background: red;
+  }
+
+  51% {
+    color: red;
+    background: inherit;
+  }
 }
 
 .link {
@@ -55,3 +81,12 @@ body {
 .name {
   margin-top: 30px;
 }
+
+footer {
+  border-top: 2px solid yellow;
+  font-size: 14px;
+  color: yellow;
+  margin-top: 60px;
+  padding: 30px;
+}
+

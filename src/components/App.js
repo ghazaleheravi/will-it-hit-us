@@ -68,12 +68,20 @@ function App() {
     } 
   else {
     return (
-      <div className="App">
-        <h2 className='header'>
-          {nextDayName}{' '}{Number(endDay)}-{monthName} there will be <strong style={{color: 'orange'}}>{posts.length}</strong> near misses!!!
-        </h2>
-        {posts.map(post => <Section key={post.id} {...post} />)}
-      </div>
+      <React.Fragment>
+        <div className="App">
+          <h2 className='header'>
+            {nextDayName}{' '}{Number(endDay)}-{monthName} there will be <strong style={{color: 'orange'}}>{posts.length}</strong> near misses!!!
+          </h2>
+          {posts
+            .sort(a => a.is_potentially_hazardous_asteroid ? -1 : 1)
+            .map(post => <Section key={post.id} {...post} />)}
+        </div>
+        <footer className="footer">
+          <p>by Ghazaleh H.</p>
+          <p>Brought to you by NASA&apos;s Asteroids-NeoWs(Near Earth Object Web Service)</p>
+        </footer>
+      </React.Fragment>
     );
   }
 }
