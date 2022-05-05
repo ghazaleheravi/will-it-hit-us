@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Section from './Section';
 
 function App() {
@@ -14,47 +15,44 @@ function App() {
   let months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
   let nextDayName = days[date.getDay()+1];
   let monthName = months[date.getMonth()];
-  let endDay = null;
 
   function nextDay() {
     let year = todayArr[0];
     let month = todayArr[1];
     let day = todayArr[2];
+    let endDay = null;
     let daysInMonth = new Date(year, month, 0).getDate();
     if (Number(day) + 1 <= daysInMonth) {
       if(Number(day) + 1 < 10) {
         endDay = '0' + (Number(day)+1);
       } else {
-        endDay = (Number(day) + 1);
+        endDay = (Number(day) + 1).toString();
       }
     } else if (Number(month) < 12){
-      month = Number(month)+1;
+      month = (Number(month)+1).toString();
       endDay = '01';
     } else {
-      year = Number(year)+1;
+      year = (Number(year)+1).toString();
       month = '01';
       endDay = '01';
     }
     return year + '-' + month + '-' + endDay;
   }
-
+  
   useEffect(() => {
-    fetch(`https://api.nasa.gov/neo/rest/v1/feed/?start_date=${today}&end_date=${nextDay()}&api_key=${key}`)
-      .then(response => response.json())
-      .then( result => {
-        setisLoaded(true);
-        setPosts(result.near_earth_objects[`${nextDay()}`]);
-        },
-      )  
-      .catch(error => {
-        setisLoaded(true);
-        setError(error);
+    axios.get(`https://api.nasa.gov/neo/rest/v1/feed/?start_date=${today}&end_date=${nextDay()}&api_key=${key}`)
+      .then(
+        (response) => {
+          setisLoaded(true);
+          setPosts(response.data.near_earth_objects[`${nextDay()}`]);
+        },  
+        (error) => {
+          setisLoaded(true);
+          setError(error);
         }
-      )
+      );
   }, []);
 
-    console.log('data: ', posts);
-  
   if (error) {
     return <div>Something went wrong. Error: {error.message} </div>;
   } 
@@ -70,7 +68,7 @@ function App() {
       <React.Fragment>
         <div className="App">
           <h2 className='header'>
-            {nextDayName}{' '}{Number(endDay)}-{monthName} there will be <strong style={{color: 'orange'}}>{posts.length}</strong> near misses!!!
+            {nextDayName}{' '}{nextDay().split('-')[2]}-{monthName} there will be <strong style={{color: 'orange'}}>{posts.length}</strong> near misses!!!
           </h2>
           {posts
             .sort(a => a.is_potentially_hazardous_asteroid ? -1 : 1)
