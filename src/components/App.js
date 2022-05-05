@@ -39,7 +39,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch(`http://api.nasa.gov/neo/rest/v1/feed/?start_date=${today}&end_date=${nextDay()}&api_key=${key}`)
+    fetch(`https://api.nasa.gov/neo/rest/v1/feed/?start_date=${today}&end_date=${nextDay()}&api_key=${key}`)
       .then(response => response.json())
       .then( result => {
         setisLoaded(true);
