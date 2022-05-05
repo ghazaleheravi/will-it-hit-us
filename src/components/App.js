@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState, useEffect } from "react";
 import Section from './Section';
 
@@ -40,17 +39,18 @@ function App() {
   }
 
   useEffect(() => {
-    axios.get(`http://api.nasa.gov/neo/rest/v1/feed/?start_date=${today}&end_date=${nextDay()}&api_key=${key}`)
-      .then(
-        (response) => {
+    fetch(`http://api.nasa.gov/neo/rest/v1/feed/?start_date=${today}&end_date=${nextDay()}&api_key=${key}`)
+      .then(response => response.json())
+      .then( result => {
         setisLoaded(true);
-        setPosts(response.data.near_earth_objects[`${nextDay()}`]);
+        setPosts(result.near_earth_objects[`${nextDay()}`]);
         },
-        (error) => {
-          setisLoaded(true);
-          setError(error);
+      )  
+      .catch(error => {
+        setisLoaded(true);
+        setError(error);
         }
-      );
+      )
   }, []);
 
     console.log('data: ', posts);
