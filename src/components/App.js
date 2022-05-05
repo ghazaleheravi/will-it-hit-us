@@ -39,9 +39,8 @@ function App() {
     return year + '-' + month + '-' + endDay;
   }
 
-  const url = `http://api.nasa.gov/neo/rest/v1/feed/?start_date=${today}&end_date=${nextDay()}&api_key=${key}`;
   useEffect(() => {
-    axios.get(url)
+    axios.get(`http://api.nasa.gov/neo/rest/v1/feed/?start_date=${today}&end_date=${nextDay()}&api_key=${key}`)
       .then(
         (response) => {
         setisLoaded(true);
